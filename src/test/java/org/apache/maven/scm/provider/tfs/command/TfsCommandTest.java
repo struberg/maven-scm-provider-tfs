@@ -48,7 +48,7 @@ public class TfsCommandTest
 
     protected ScmFileSet getScmFileSet()
     {
-        return new ScmFileSet( new File( "c:\basedir" ), new File( "file" ) );
+        return new ScmFileSet( getWorkingDirectory(), new File( "file" ) );
     }
 
     public void testFileList()
