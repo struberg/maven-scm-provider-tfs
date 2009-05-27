@@ -20,7 +20,6 @@ package org.apache.maven.scm.provider.tfs.command;
  */
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.apache.maven.scm.ScmFile;
 import org.apache.maven.scm.ScmFileStatus;
