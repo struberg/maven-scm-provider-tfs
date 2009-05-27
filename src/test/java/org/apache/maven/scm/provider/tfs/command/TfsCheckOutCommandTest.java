@@ -20,6 +20,7 @@ package org.apache.maven.scm.provider.tfs.command;
  */
 
 import java.io.File;
+import java.util.Iterator;
 
 import org.apache.maven.scm.ScmFile;
 import org.apache.maven.scm.ScmFileStatus;
@@ -71,20 +72,20 @@ public class TfsCheckOutCommandTest
         consumer.consumeLine( "Replacing customBuildCallbacks.xml" );
         consumer.consumeLine( "" );
 
+        String exp1 = new File( "C:\\temp\\maven\\c8", ".classpath" ).getAbsolutePath();
+        String exp2 = new File( "C:\\temp\\maven\\c8", "build.properties" ).getAbsolutePath();
+        ScmFile expFile1 = new ScmFile( exp1, ScmFileStatus.CHECKED_OUT );
+        ScmFile expFile2 = new ScmFile( exp2, ScmFileStatus.CHECKED_OUT );
         assertNotNull( consumer.getFiles() );
         assertEquals( 11, consumer.getFiles().size() );
-        assertTrue( consumer.getFiles().contains( new ScmFile( "C:\\temp\\maven\\c8", ScmFileStatus.CHECKED_OUT ) ) );
-        assertTrue( consumer.getFiles().contains(
-                                                  new ScmFile( "C:\\temp\\maven\\c8\\build.properties",
-                                                               ScmFileStatus.CHECKED_OUT ) ) );
+        assertTrue( consumer.getFiles().contains( expFile1 ) );
+        assertTrue( consumer.getFiles().contains( expFile2 ) );
     }
 
     public void testMSCommand()
     {
         consumer.consumeLine( "c:\\temp\\maven:" );
         consumer.consumeLine( "Replacing c10" );
-        consumer.consumeLine( "" );
-        consumer.consumeLine( "c:\\temp\\maven\\c10:" );
         consumer.consumeLine( "Replacing .classpath" );
         consumer.consumeLine( "Replacing .myclasspath" );
         consumer.consumeLine( "Replacing .project" );
@@ -96,11 +97,14 @@ public class TfsCheckOutCommandTest
         consumer.consumeLine( "Replacing build.properties" );
 
         assertNotNull( consumer.getFiles() );
+        
+        String exp1 = new File( "c:\\temp\\maven", ".classpath" ).getAbsolutePath();
+        String exp2 = new File( "c:\\temp\\maven", ".project" ).getAbsolutePath();
+        ScmFile expFile1 = new ScmFile( exp1, ScmFileStatus.CHECKED_OUT );
+        ScmFile expFile2 = new ScmFile( exp2, ScmFileStatus.CHECKED_OUT );
         assertEquals( 11, consumer.getFiles().size() );
-        assertTrue( consumer.getFiles().contains( new ScmFile( "c:\\temp\\maven", ScmFileStatus.CHECKED_OUT ) ) );
-        assertTrue( consumer.getFiles().contains(
-                                                  new ScmFile( "c:\\temp\\maven\\c10\\build.properties",
-                                                               ScmFileStatus.CHECKED_OUT ) ) );
+        assertTrue( consumer.getFiles().contains( expFile1 ) );
+        assertTrue( consumer.getFiles().contains(expFile2) );
     }
 
 }
