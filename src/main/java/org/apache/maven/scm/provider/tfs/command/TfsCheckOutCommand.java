@@ -146,8 +146,7 @@ public class TfsCheckOutCommand
         command.addArgument( "-server:" + url );
         command.addArgument( workspace );
         
-        int status = command.execute( out, err );
-        //X TODO check status
+        command.execute( out, err );
     }
 
 }
